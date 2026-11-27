@@ -14,12 +14,18 @@ import (
         "github.com/newrelic/go-agent/v3/newrelic"
 )
 
-const (
-        port     = ":443"
-        certFile = "/etc/letsencrypt/live/order-api.fadikaba.com/fullchain.pem"
-        keyFile  = "/etc/letsencrypt/live/order-api.fadikaba.com/privkey.pem"
+var (
+	port     = getenv("PORT", ":8443")
+	certFile = getenv("TLS_CERT_FILE", "./certs/fullchain.pem")
+	keyFile  = getenv("TLS_KEY_FILE", "./certs/privkey.pem")
 )
 
+func getenv(key, def string) string {
+	if v := os.Getenv(key); v != "" {
+		return v
+	}
+	return def
+}
 // ---------- Data Structures ----------
 
 type OrderLog struct {

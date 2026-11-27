@@ -1,10 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
+URL="https://localhost:8443/"
 
-i=0
-while [ $i -lt 300 ]
-do  
-	curl -k https://localhost -H "X-Correlation-ID: OENI7V9p1kqe"
-	curl -k https://localhost 
-       	i=$((i+1))
+for i in $(seq 1 1000); do
+  curl -sk -o /dev/null -w "%{http_code}\n" "$URL" \
+    -H "X-Correlation-ID: OENI7V9p1kqe"
+  curl -sk -o /dev/null -w "%{http_code}\n" "$URL"
+  sleep 0.2
 done

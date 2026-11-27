@@ -1,3 +1,3 @@
-go build -o order-api
-sudo setcap 'cap_net_bind_service=+ep' ./order-api
-./order-api
+set -a; source ../../.env; set +a;
+go build -o order-api-nr
+./order-api-nr
